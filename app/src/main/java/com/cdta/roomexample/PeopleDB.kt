@@ -2,6 +2,7 @@ package com.cdta.roomexample
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.cdta.roomexample.db.Person
 
 @Database(
     entities = [Person::class],
@@ -10,5 +11,5 @@ import androidx.room.RoomDatabase
 
 abstract class PeopleDB: RoomDatabase() {
 
-    abstract fun personDao():PersonDao
+    abstract fun personDao(): PersonDao
 }
