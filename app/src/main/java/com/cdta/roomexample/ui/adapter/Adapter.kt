@@ -1,9 +1,10 @@
-package com.cdta.roomexample
+package com.cdta.roomexample.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.cdta.roomexample.R
 import com.cdta.roomexample.databinding.ListItemBinding
 import com.cdta.roomexample.db.Person
 
@@ -13,7 +14,7 @@ class Adapter (private val personsList: List<Person>, private val clicklistener:
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater= LayoutInflater.from(parent.context)
         val binding: ListItemBinding =
-            DataBindingUtil.inflate(layoutInflater,R.layout.list_item,parent,false)
+            DataBindingUtil.inflate(layoutInflater, R.layout.list_item,parent,false)
         return ViewHolder(binding)
     }
 

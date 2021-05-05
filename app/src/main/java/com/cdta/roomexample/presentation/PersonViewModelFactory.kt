@@ -1,4 +1,4 @@
-package com.cdta.roomexample
+package com.cdta.roomexample.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

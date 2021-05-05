@@ -2,21 +2,20 @@ package com.cdta.roomexample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cdta.roomexample.databinding.ActivityMainBinding
 import com.cdta.roomexample.db.Person
 import com.cdta.roomexample.db.PersonDB
 import com.cdta.roomexample.db.PersonDao
 import com.cdta.roomexample.db.PersonRepository
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import com.cdta.roomexample.presentation.PersonViewModel
+import com.cdta.roomexample.presentation.PersonViewModelFactory
+import com.cdta.roomexample.ui.adapter.Adapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         displayPersonList()
         initRecyclerView()
+        personViewModel.message.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun initRecyclerView(){
@@ -43,13 +47,13 @@ class MainActivity : AppCompatActivity() {
     private fun displayPersonList(){
         personViewModel.persons.observe(this, Observer {
             Log.i("MYTAG",it.toString())
-            binding.personRecyclerview.adapter = Adapter(it, {selectedItem:Person->listItemClicked(selectedItem)})
+            binding.personRecyclerview.adapter = Adapter(it, { selectedItem: Person -> listItemClicked(selectedItem) })
         })
 
     }
 
     private fun listItemClicked(person: Person){
-        Toast.makeText(this,"Selected name is ${person.name}",Toast.LENGTH_LONG).show()
+//        Toast.makeText(this,"Selected name is ${person.name}",Toast.LENGTH_LONG).show()
         personViewModel.initUpdateAndDelete(person)
     }
 

@@ -1,12 +1,14 @@
-package com.cdta.roomexample
+package com.cdta.roomexample.presentation
 
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cdta.roomexample.db.Person
 import com.cdta.roomexample.db.PersonRepository
+import com.cdta.roomexample.ui.Event
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -30,6 +32,14 @@ class PersonViewModel (private val repository: PersonRepository): ViewModel(), O
 
     @Bindable
     val clearAllOrDeleteBtnText = MutableLiveData<String>()
+
+    private val statusMessage = MutableLiveData<Event<String>>()
+
+    val message : LiveData<Event<String>>
+    get()=statusMessage
+
+
+
 
     /**
      * this text the user will see in the button
@@ -69,6 +79,7 @@ class PersonViewModel (private val repository: PersonRepository): ViewModel(), O
 
     fun insert(person: Person):Job = viewModelScope.launch {
             repository.insert(person)
+        statusMessage.value = Event("Person Inserted Succesfully")
 
     }
 
@@ -80,6 +91,7 @@ class PersonViewModel (private val repository: PersonRepository): ViewModel(), O
         personToUpdateOrDelete = person
         saveOrUpdateBtnText.value = "Save"
         clearAllOrDeleteBtnText.value = "Clear All"
+        statusMessage.value = Event("Person Update Succesfully")
     }
 
     fun delete(person: Person):Job = viewModelScope.launch {
@@ -90,10 +102,12 @@ class PersonViewModel (private val repository: PersonRepository): ViewModel(), O
         personToUpdateOrDelete = person
         saveOrUpdateBtnText.value = "Save"
         clearAllOrDeleteBtnText.value = "Clear All"
+        statusMessage.value = Event("Person Deleted Succesfully")
     }
 
     fun clearAll():Job = viewModelScope.launch {
         repository.deleteAll()
+        statusMessage.value = Event("All Person Deleted Succesfully")
     }
 
     fun initUpdateAndDelete(person: Person){
