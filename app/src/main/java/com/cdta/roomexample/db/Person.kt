@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "person_data_table")
 data class Person (
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    var id: Int,
     @ColumnInfo(name = "Nombre")
-    val name:String,
+    var name:String,
 //    @ColumnInfo(name="Edad")
 //    val age: Int,
     @ColumnInfo(name = "Dirección")
-    val address: String
+    var address: String
 )
