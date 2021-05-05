@@ -10,8 +10,8 @@ data class Person (
     val id: Int,
     @ColumnInfo(name = "Nombre")
     val name:String,
-    @ColumnInfo(name="Edad")
-    val age: Int,
+//    @ColumnInfo(name="Edad")
+//    val age: Int,
     @ColumnInfo(name = "Dirección")
     val address: String
 )

@@ -4,9 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.cdta.roomexample.db.Person
-import com.cdta.roomexample.db.PersonDao
-import java.security.AccessControlContext
 
 @Database(
     entities = [Person::class],
@@ -15,7 +12,7 @@ import java.security.AccessControlContext
 
 abstract class PersonDB: RoomDatabase() {
 
-    abstract val personDB: PersonDB
+    abstract val personDAO: PersonDao
 
     companion object{
         @Volatile
