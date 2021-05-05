@@ -4,20 +4,20 @@ class PersonRepository (private val dao: PersonDao){
 
     val persons = dao.getAllPersons()
 
-    suspend fun insert(person: Person){
-        dao.insertPerson(person)
+    suspend fun insert(person: Person):Long{
+        return dao.insertPerson(person)
     }
 
-    suspend fun update(person: Person){
-        dao.update(person)
+    suspend fun update(person: Person):Int{
+        return dao.update(person)
     }
 
-    suspend fun delete(person: Person){
-        dao.delete(person)
+    suspend fun delete(person: Person):Int{
+        return dao.delete(person)
     }
 
-    suspend fun deleteAll(){
-        dao.deleteAll()
+    suspend fun deleteAll():Int{
+        return dao.deleteAll()
     }
 
 }
