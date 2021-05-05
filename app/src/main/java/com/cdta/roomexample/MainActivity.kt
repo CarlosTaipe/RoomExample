@@ -1,9 +1,9 @@
 package com.cdta.roomexample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var personViewModel: PersonViewModel
+    private lateinit var adapter: Adapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
@@ -41,13 +42,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView(){
         binding.personRecyclerview.layoutManager = LinearLayoutManager(this)
+        adapter = Adapter({ selectedItem: Person -> listItemClicked(selectedItem)})
+        binding.personRecyclerview.adapter = adapter
         displayPersonList()
     }
 
     private fun displayPersonList(){
         personViewModel.persons.observe(this, Observer {
             Log.i("MYTAG",it.toString())
-            binding.personRecyclerview.adapter = Adapter(it, { selectedItem: Person -> listItemClicked(selectedItem) })
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
         })
 
     }

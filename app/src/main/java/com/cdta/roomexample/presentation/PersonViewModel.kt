@@ -1,5 +1,6 @@
 package com.cdta.roomexample.presentation
 
+import android.util.Patterns
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
@@ -11,6 +12,7 @@ import com.cdta.roomexample.db.PersonRepository
 import com.cdta.roomexample.ui.Event
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 class PersonViewModel (private val repository: PersonRepository): ViewModel(), Observable{
     val persons = repository.persons
@@ -51,20 +53,25 @@ class PersonViewModel (private val repository: PersonRepository): ViewModel(), O
     }
 
     fun saveOrUpdate(){
-        if (isUpdateOrDelete){
-            personToUpdateOrDelete.name = inputName.value!!
-            personToUpdateOrDelete.address = inputAddress.value!!
-            update(personToUpdateOrDelete)
-        }else{
-            val name:String = inputName.value!!
+        if(inputName.value == null){
+            statusMessage.value = Event("Please Enter Person's name")
+        }else if(inputAddress.value == null){
+            statusMessage.value = Event("Please Enter Person's addres")
+        }else {
+            if (isUpdateOrDelete){
+                personToUpdateOrDelete.name = inputName.value!!
+                personToUpdateOrDelete.address = inputAddress.value!!
+                update(personToUpdateOrDelete)
+            }else{
+                val name:String = inputName.value!!
 //        val age:Int = inputAge.toString()
-            val address:String = inputAddress.value!!
+                val address:String = inputAddress.value!!
 
-            insert(Person(0,name,address))
-            inputName.value = null
-            inputAddress.value = null
+                insert(Person(0,name,address))
+                inputName.value = null
+                inputAddress.value = null
+            }
         }
-
 
     }
 

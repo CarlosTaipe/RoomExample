@@ -8,8 +8,10 @@ import com.cdta.roomexample.R
 import com.cdta.roomexample.databinding.ListItemBinding
 import com.cdta.roomexample.db.Person
 
-class Adapter (private val personsList: List<Person>, private val clicklistener:(Person)->Unit):
+class Adapter (private val clicklistener:(Person)->Unit):
         RecyclerView.Adapter<Adapter.ViewHolder>(){
+
+    private val personsList = ArrayList<Person>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater= LayoutInflater.from(parent.context)
@@ -26,6 +28,11 @@ class Adapter (private val personsList: List<Person>, private val clicklistener:
         holder.bind(personsList[position], clicklistener)
     }
 
+    fun setList(persons: List<Person>){
+        personsList.clear()
+        personsList.addAll(persons)
+    }
+
     class ViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.root){
 
         fun bind(person: Person, clicklistener:(Person)->Unit){
@@ -38,6 +45,7 @@ class Adapter (private val personsList: List<Person>, private val clicklistener:
     }
 
 }
+
 
 
 
