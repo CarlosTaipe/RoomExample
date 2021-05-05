@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cdta.roomexample.databinding.ActivityMainBinding
 import com.cdta.roomexample.db.PersonDB
 import com.cdta.roomexample.db.PersonDao
@@ -29,10 +30,18 @@ class MainActivity : AppCompatActivity() {
         binding.myViewModel = personViewModel
         binding.lifecycleOwner = this
         displayPersonList()
+        initRecyclerView()
     }
+
+    private fun initRecyclerView(){
+        binding.personRecyclerview.layoutManager = LinearLayoutManager(this)
+        displayPersonList()
+    }
+
     private fun displayPersonList(){
         personViewModel.persons.observe(this, Observer {
             Log.i("MYTAG",it.toString())
+            binding.personRecyclerview.adapter = Adapter(it)
         })
 
     }
